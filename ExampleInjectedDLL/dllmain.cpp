@@ -1,11 +1,13 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "stdafx.h"
+using namespace std;
 
-void NotifyAttached(void) 
+DWORD WINAPI NotifyAttached( LPVOID param ) 
 {
     DWORD pID = GetCurrentProcessId();
-    std::string message = "Hello, I've been injected into process: " + std::to_string(pID);
-    MessageBoxA(NULL, message.c_str(), "Injection success", MB_OK);
+    wstring message = TEXT("Hello, I've been injected into process: ") + std::to_wstring(pID);
+    MessageBox(NULL, message.c_str(), TEXT("Injection success"), MB_ICONEXCLAMATION | MB_DEFAULT_DESKTOP_ONLY);
+    return 0;
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
@@ -13,16 +15,16 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
 					 )
 {
-	switch (ul_reason_for_call)
-	{
-	case DLL_PROCESS_ATTACH:
-        CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)&NotifyAttached, NULL, NULL, NULL);
+    switch (ul_reason_for_call)
+    {
+    case DLL_PROCESS_ATTACH:
+        CreateThread(NULL, 0, NotifyAttached, NULL, NULL, NULL);
         break;
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-	case DLL_PROCESS_DETACH:
-		break;
-	}
-	return TRUE;
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return TRUE;
 }
 

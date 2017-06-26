@@ -5,6 +5,9 @@
 // DLLINJECTION_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
 #include "stdafx.h"
+#include <string>
+
+using namespace std;
 
 #ifdef DLLINJECTION_EXPORTS
 #define DLLINJECTION_API __declspec(dllexport)
@@ -21,7 +24,10 @@ enum InjectionResultNum {
     EALLOC_MEMORY,
     EWRITE_MEMORY,
     ECREATE_THREAD,
-    ETHREAD_TIMEOUT
+    ETHREAD_TIMEOUT,
+    ETHREAD_ABANDON,
+    ETHREAD_FAILURE,
+    CRITICAL_FAILURE
 };
 
 typedef struct {
@@ -29,4 +35,4 @@ typedef struct {
     DWORD error;
 } InjectionResult;
 
-DLLINJECTION_API InjectionResult fnInject(const DWORD PROCESS_ID, const char * DLL_PATH);
+DLLINJECTION_API InjectionResult fnInject(const DWORD PROCESS_ID, string DLL_PATH);

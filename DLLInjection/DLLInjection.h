@@ -11,20 +11,20 @@
 #endif
 
 enum InjectionResultNum {
-	SUCCESS,
-	EPID_INVALID,
-	EDLL_PATH_INVALID,
-	EOPEN_PROCESS_FAILED,
-	EFIND_LOAD_LIBRARY,
-	EALLOC_MEMORY,
-	EWRITE_MEMORY,
-	ECREATE_THREAD,
-	ETHREAD_TIMEOUT
+    SUCCESS,
+    EPID_INVALID,
+    EDLL_PATH_INVALID,
+    EOPEN_PROCESS_FAILED,
+    EFIND_LOAD_LIBRARY,
+    EALLOC_MEMORY,
+    EWRITE_MEMORY,
+    ECREATE_THREAD,
+    ETHREAD_TIMEOUT
 };
 
 typedef struct {
-	InjectionResultNum result;
-	DWORD error;
+    InjectionResultNum result;
+    DWORD error;
 } InjectionResult;
 
 DLLINJECTION_API InjectionResult fnInject(const DWORD PROCESS_ID, const char * DLL_PATH);
